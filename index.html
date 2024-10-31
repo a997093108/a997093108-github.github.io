@@ -7,9 +7,6 @@
 
 <script>
     window.onload = function () {
-        // 原文本: https://sm-unsubscribe-test.intlgame.com/resubscribe?token=rID0LY/YB1eRkd4c25NXO2f9YLWCNVWcxF8KoGOmCj3dLFSl2s8l2bdmSzFMePuI&sign=e84229724d4f9d0893080d36bccd8419&lang=en&module=template&version=v2&email=gb_liushuai@ieggtb.com
-        // base64: aHR0cHM6Ly9zbS11bnN1YnNjcmliZS10ZXN0LmludGxnYW1lLmNvbS9yZXN1YnNjcmliZT90b2tlbj1ySUQwTFkvWUIxZVJrZDRjMjVOWE8yZjlZTFdDTlZXY3hGOEtvR09tQ2ozZExGU2wyczhsMmJkbVN6Rk1lUHVJJnNpZ249ZTg0MjI5NzI0ZDRmOWQwODkzMDgwZDM2YmNjZDg0MTkmbGFuZz1lbiZtb2R1bGU9dGVtcGxhdGUmdmVyc2lvbj12MiZlbWFpbD1nYl9saXVzaHVhaUBpZWdndGIuY29t
-
         // 从地址栏获取iframe的src，src是base64编码过的一串文本
         let uri = new URL(window.location.href);
         let src = uri.searchParams.get('src');
@@ -18,10 +15,12 @@
             return
         }
 
-        console.log('encode base64 src:', src)
-        src = atob(src); // base64解码
-        console.log('decode base64 sec:', src)
-
+        // src文本解码：src = urlEncodeComponent(atob(src))
+        //     1.为什么base64解码？为了在地址栏隐藏原url，我们将原url base编码过了。
+        //     2.为什么url解码？base64有的字符与url协议冲突，我们所以我们将它url编码过了。
+        src = urlEncodeComponent(atob(src));
+        console.log(src);
+        
         // 设置iframe src，显示网页
         let frame = document.getElementById("my-frame");
         frame.src = src
