@@ -15,10 +15,10 @@
             return
         }
 
-        // src文本解码：src = urlEncodeComponent(atob(src))
+        // src文本解码：src = decodeURIComponent(atob(src))
         //     1.为什么base64解码？为了在地址栏隐藏原url，我们将原url base编码过了。
         //     2.为什么url解码？base64有的字符与url协议冲突，我们所以我们将它url编码过了。
-        src = urlEncodeComponent(atob(src));
+        src = decodeURIComponent(atob(src));
         console.log(src);
         
         // 设置iframe src，显示网页
